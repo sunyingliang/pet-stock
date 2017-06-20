@@ -167,7 +167,7 @@ class Article
      */
     public function getCreatedAt()
     {
-        return $this->createdAt;
+        return $this->createdAt->format('Y-m-d H:i:s');
     }
 
     /**
@@ -191,7 +191,7 @@ class Article
      */
     public function getUpdatedAt()
     {
-        return $this->updatedAt;
+        return $this->updatedAt->format('Y-m-d H:i:s');
     }
 
     /**
@@ -215,6 +215,6 @@ class Article
      */
     public function getAuthor()
     {
-        return $this->author;
+        return $this->author->getName();
     }
 }
