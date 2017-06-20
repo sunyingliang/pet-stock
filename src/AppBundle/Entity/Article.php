@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Exception\InvalidParameterException;
 
 /**
  * Article
@@ -22,7 +23,7 @@ class Article
     private $id;
 
     /**
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="Author")
      * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
      */
@@ -83,6 +84,10 @@ class Article
      */
     public function setTitle($title)
     {
+        if (!is_string($title) || strlen($title) > 255) {
+            throw new InvalidParameterException('Error: passed in parameter {title} is not legal');
+        }
+
         $this->title = $title;
 
         return $this;
@@ -107,6 +112,10 @@ class Article
      */
     public function setUrl($url)
     {
+        if (!is_string($url) || strlen($url) > 128) {
+            throw new InvalidParameterException('Error: passed in parameter {url} is not legal');
+        }
+        
         $this->url = $url;
 
         return $this;
@@ -131,6 +140,10 @@ class Article
      */
     public function setContent($content)
     {
+        if (!is_string($content)) {
+            throw new InvalidParameterException('Error: passed in parameter {content} is not legal');
+        }
+
         $this->content = $content;
 
         return $this;
@@ -155,6 +168,10 @@ class Article
      */
     public function setCreatedAt($createdAt)
     {
+        if (!$this->validateDateTime($createdAt)) {
+            throw new InvalidParameterException('Error: passed in parameter {createdAt} is not legal');
+        }
+
         $this->createdAt = new \DateTime($createdAt);
 
         return $this;
@@ -179,6 +196,10 @@ class Article
      */
     public function setUpdatedAt($updatedAt)
     {
+        if (!$this->validateDateTime($updatedAt)) {
+            throw new InvalidParameterException('Error: passed in parameter {updatedAt} is not legal');
+        }
+
         $this->updatedAt = new \DateTime($updatedAt);
 
         return $this;
@@ -217,4 +238,14 @@ class Article
     {
         return $this->author->getName();
     }
+
+
+    #region Utils
+    private function validateDateTime($dateTime)
+    {
+        $regexp = '@\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}@';
+
+        return preg_match($regexp, $dateTime) === 1;
+    }
+    #endregion
 }

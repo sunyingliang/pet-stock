@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Exception\InvalidParameterException;
 
 /**
 * Author 
@@ -44,6 +45,10 @@ class Author
      */
     public function setName($name)
     {
+        if (!is_string($name) || strlen($name) > 255) {
+            throw new InvalidParameterException('Error: passed in parameter {name} is not legal');
+        }
+
         $this->name = $name;
 
         return $this;
