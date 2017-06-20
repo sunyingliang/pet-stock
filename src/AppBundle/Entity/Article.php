@@ -84,7 +84,7 @@ class Article
      */
     public function setTitle($title)
     {
-        if (!is_string($title) || strlen($title) > 255) {
+        if (strlen($title) > 255) {
             throw new InvalidParameterException('Error: passed in parameter {title} is not legal');
         }
 
@@ -112,7 +112,7 @@ class Article
      */
     public function setUrl($url)
     {
-        if (!is_string($url) || strlen($url) > 128) {
+        if (strlen($url) > 128) {
             throw new InvalidParameterException('Error: passed in parameter {url} is not legal');
         }
         
@@ -140,10 +140,6 @@ class Article
      */
     public function setContent($content)
     {
-        if (!is_string($content)) {
-            throw new InvalidParameterException('Error: passed in parameter {content} is not legal');
-        }
-
         $this->content = $content;
 
         return $this;
