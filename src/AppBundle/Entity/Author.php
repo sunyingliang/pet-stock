@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+* Author 
+*
 * @ORM\Entity
 * @ORM\Table(name="author")
 */
