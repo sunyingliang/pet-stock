@@ -155,7 +155,7 @@ class Article
      */
     public function setCreatedAt($createdAt)
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new \DateTime($createdAt);
 
         return $this;
     }
@@ -179,7 +179,7 @@ class Article
      */
     public function setUpdatedAt($updatedAt)
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new \DateTime($updatedAt);
 
         return $this;
     }
